@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日快乐！刘颖</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 50px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .birthday-title {
+            font-size: 3.5rem;
+            color: #d32f2f;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        .birthday-subtitle {
+            font-size: 1.8rem;
+            color: #5d4037;
+            margin-bottom: 30px;
+        }
+        
+        .cake-container {
+            position: relative;
+            margin: 40px auto;
+            width: 280px;
+            height: 300px;
+        }
+        
+        .real-cake {
+            width: 100%;
+            max-width: 280px;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .message-box {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .message-box h2 {
+            color: #d32f2f;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+        }
+        
+        .message-content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #5d4037;
+        }
+        
+        .highlight {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        
+        .birthday-info {
+            display: flex;
+            justify-content: center;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        
+        .info-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 10px;
+            width: 180px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .info-card i {
+            font-size: 2.5rem;
+            color: #d32f2f;
+            margin-bottom: 10px;
+        }
+        
+        .balloon {
+            position: absolute;
+            width: 50px;
+            height: 60px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .balloon:before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 80px;
+            background: rgba(0,0,0,0.2);
+            bottom: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .balloon:nth-child(1) {
+            background: radial-gradient(circle at 30% 30%, #ff4081, #d81b60);
+            top: 10%;
+            left: 5%;
+            animation: float 15s infinite linear;
+        }
+        
+        .balloon:nth-child(2) {
+            background: radial-gradient(circle at 30% 30%, #7e57c2, #4527a0);
+            top: 20%;
+            right: 7%;
+            animation: float 18s infinite linear;
+            animation-delay: 2s;
+        }
+        
+        .balloon:nth-child(3) {
+            background: radial-gradient(circle at 30% 30%, #29b6f6, #0288d1);
+            top: 40%;
+            left: 8%;
+            animation: float 12s infinite linear;
+            animation-delay: 4s;
+        }
+        
+        .balloon:nth-child(4) {
+            background: radial-gradient(circle at 30% 30%, #66bb6a, #388e3c);
+            bottom: 20%;
+            right: 10%;
+            animation: float 16s infinite linear;
+            animation-delay: 1s;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #f44336;
+            opacity: 0.8;
+            border-radius: 50%;
+            z-index: 0;
+        }
+        
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #d32f2f;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 100;
+        }
+        
+        .footer-note {
+            text-align: center;
+            margin-top: 30px;
+            color: #5d4037;
+            font-size: 0.9rem;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0) rotate(0); }
+        }
+        
+        @media (max-width: 600px) {
+            .birthday-title {
+                font-size: 2.5rem;
+            }
+            
+            .birthday-subtitle {
+                font-size: 1.4rem;
+            }
+            
+            .cake-container {
+                width: 200px;
+                height: 220px;
+            }
+            
+            .message-box {
+                padding: 20px;
+            }
+            
+            .message-box h2 {
+                font-size: 1.8rem;
+            }
+            
+            .message-content {
+                font-size: 1rem;
+            }
+            
+            .info-card {
+                width: 140px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 气球装饰 -->
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    
+    <!-- 音乐控制按钮 -->
+    <div class="music-control" id="musicControl">
+        <i class="fas fa-play"></i>
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1 class="birthday-title">生日快乐!</h1>
+            <h2 class="birthday-subtitle">亲爱的刘颖</h2>
+            
+            <div class="cake-container">
+                <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1089&q=80" 
+                     alt="生日蛋糕" class="real-cake">
+            </div>
+        </header>
+        
+        <div class="birthday-info">
+            <div class="info-card">
+                <i class="fas fa-user"></i>
+                <h3>姓名</h3>
+                <p>刘颖</p>
+            </div>
+            
+            <div class="info-card">
+                <i class="fas fa-birthday-cake"></i>
+                <h3>生日</h3>
+                <p>2003年08月11日</p>
+            </div>
+            
+            <div class="info-card">
+                <i class="fas fa-gift"></i>
+                <h3>祝福</h3>
+                <p>幸福快乐</p>
+            </div>
+        </div>
+        
+        <div class="message-box">
+            <h2>生日祝福</h2>
+            <div class="message-content">
+                <p>亲爱的<span class="highlight">刘颖</span>，在这特别的日子里，愿你被幸福和快乐环绕！</p>
+                <p>从<span class="highlight">2003年8月11日</span>到今天的每一刻，你都是如此特别的存在。愿你的生活充满阳光，愿你的梦想如星辰般闪耀！</p>
+                <p>愿新的一岁带给你无尽的欢笑、真挚的友情和无限的可能。愿你保持那份独特的魅力，继续闪耀光芒！</p>
+                <p>祝你生日快乐，愿你拥有一个美好的今天，一个灿烂的明天，和一个充满惊喜的未来！</p>
+            </div>
+        </div>
+        
+        <div class="footer-note">
+            <p>❤ 此页面专为你制作，打开即自动播放生日歌 ❤</p>
+        </div>
+    </div>
+
+    <script>
+        // 创建音频上下文
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = new AudioContext();
+        
+        // 生日歌频率和持续时间
+        const birthdaySong = [
+            { note: 'G4', duration: 0.5 }, { note: 'G4', duration: 0.5 }, 
+            { note: 'A4', duration: 1 }, { note: 'G4', duration: 1 }, 
+            { note: 'C5', duration: 1 }, { note: 'B4', duration: 2 },
+            { note: 'G4', duration: 0.5 }, { note: 'G4', duration: 0.5 }, 
+            { note: 'A4', duration: 1 }, { note: 'G4', duration: 1 }, 
+            { note: 'D5', duration: 1 }, { note: 'C5', duration: 2 },
+            { note: 'G4', duration: 0.5 }, { note: 'G4', duration: 0.5 }, 
+            { note: 'G5', duration: 1 }, { note: 'E5', duration: 1 }, 
+            { note: 'C5', duration: 1 }, { note: 'B4', duration: 1 }, 
+            { note: 'A4', duration: 2 },
+            { note: 'F5', duration: 0.5 }, { note: 'F5', duration: 0.5 }, 
+            { note: 'E5', duration: 1 }, { note: 'C5', duration: 1 }, 
+            { note: 'D5', duration: 1 }, { note: 'C5', duration: 2 }
+        ];
+        
+        // 音符频率映射
+        const noteFrequencies = {
+            'C4': 261.63, 'D4': 293.66, 'E4': 329.63, 'F4': 349.23, 
+            'G4': 392.00, 'A4': 440.00, 'B4': 493.88, 'C5': 523.25, 
+            'D5': 587.33, 'E5': 659.25, 'F5': 698.46, 'G5': 783.99
+        };
+        
+        // 播放单个音符
+        function playTone(frequency, duration) {
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            oscillator.type = 'sine';
+            oscillator.frequency.value = frequency;
+            
+            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+            
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + duration);
+        }
+        
+        // 播放生日歌
+        function playBirthdaySong() {
+            let time = audioCtx.currentTime;
+            
+            birthdaySong.forEach((noteObj, index) => {
+                const frequency = noteFrequencies[noteObj.note];
+                const duration = noteObj.duration;
+                
+                setTimeout(() => {
+                    playTone(frequency, duration);
+                }, time * 1000);
+                
+                time += duration + 0.05; // 添加小间隙
+            });
+            
+            // 循环播放
+            setTimeout(playBirthdaySong, time * 1000 + 1000);
+        }
+        
+        // 创建五彩纸屑效果
+        function createConfetti() {
+            const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = `${Math.random() * 100}vw`;
+                confetti.style.top = `${Math.random() * -50}vh`;
+                confetti.style.width = `${Math.random() * 10 + 5}px`;
+                confetti.style.height = confetti.style.width;
+                
+                // 设置动画
+                const animationDuration = Math.random() * 5 + 5;
+                confetti.style.animation = `fall ${animationDuration}s linear infinite`;
+                
+                // 创建关键帧
+                const keyframes = `@keyframes fall-${i} {
+                    0% { transform: translateY(0) rotate(0); opacity: 1; }
+                    100% { transform: translateY(100vh) rotate(${Math.random() * 360}deg); opacity: 0; }
+                }`;
+                
+                const style = document.createElement('style');
+                style.textContent = keyframes;
+                document.head.appendChild(style);
+                
+                confetti.style.animationName = `fall-${i}`;
+                document.body.appendChild(confetti);
+            }
+        }
+        
+        // 音乐控制
+        const musicControl = document.getElementById('musicControl');
+        let isPlaying = false;
+        
+        musicControl.addEventListener('click', () => {
+            if (isPlaying) {
+                // 暂停音乐
+                audioCtx.suspend();
+                musicControl.innerHTML = '<i class="fas fa-play"></i>';
+            } else {
+                // 恢复播放
+                audioCtx.resume();
+                musicControl.innerHTML = '<i class="fas fa-pause"></i>';
+            }
+            isPlaying = !isPlaying;
+        });
+        
+        // 页面加载完成后执行
+        window.addEventListener('load', () => {
+            // 创建纸屑效果
+            createConfetti();
+            
+            // 用户交互后开始播放音乐（微信浏览器限制）
+            document.body.addEventListener('click', () => {
+                if (!isPlaying) {
+                    // 开始播放生日歌
+                    playBirthdaySong();
+                    musicControl.innerHTML = '<i class="fas fa-pause"></i>';
+                    isPlaying = true;
+                    
+                    // 移除事件监听器，避免重复触发
+                    document.body.removeEventListener('click', arguments.callee);
+                }
+            }, { once: true });
+        });
+    </script>
+</body>
+</html>
