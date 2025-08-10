@@ -3,341 +3,1196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>生日快乐！刘颖</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>银河祝福信 - 刘颖生日快乐</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-            color: #333;
+            font-family: 'ZCOOL QingKe HuangYou', sans-serif;
+            background: radial-gradient(circle, #000000, #0a0a2a, #1a1a4a);
+            color: #e0f7ff;
             line-height: 1.6;
-            overflow-x: hidden;
+            overflow: hidden;
             min-height: 100vh;
-            position: relative;
-            padding-bottom: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+            padding: 20px;
+            touch-action: manipulation;
         }
         
-        .container {
+        /* 银河容器 */
+        .galaxy-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            transform: rotateX(75deg);
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+        
+        /* 银河中心 */
+        .galaxy-core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ff9966, #ff5e62, #993366);
+            filter: blur(50px);
+            transform: translate(-50%, -50%);
+            animation: galaxyPulse 15s infinite alternate;
+            z-index: 1;
+            box-shadow: 0 0 200px rgba(255, 153, 102, 0.7);
+            will-change: transform, box-shadow;
+        }
+        
+        /* 银河旋臂 */
+        .galaxy-arm {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2000px;
+            height: 2000px;
+            border-radius: 50%;
+            opacity: 0.4;
+            transform: translate(-50%, -50%) rotate(0deg);
+            background: conic-gradient(
+                transparent 0deg, 
+                rgba(0, 195, 255, 0.3) 30deg, 
+                transparent 60deg,
+                rgba(255, 77, 166, 0.3) 90deg,
+                transparent 120deg,
+                rgba(0, 243, 255, 0.3) 150deg,
+                transparent 180deg,
+                rgba(255, 255, 255, 0.3) 210deg,
+                transparent 240deg,
+                rgba(153, 102, 255, 0.3) 270deg,
+                transparent 300deg,
+                rgba(255, 153, 102, 0.3) 330deg,
+                transparent 360deg
+            );
+            animation: galaxySpin 200s infinite linear;
+            z-index: 2;
+        }
+        
+        .galaxy-arm-1 {
+            width: 2000px;
+            height: 2000px;
+            opacity: 0.4;
+        }
+        
+        .galaxy-arm-2 {
+            width: 1800px;
+            height: 1800px;
+            opacity: 0.3;
+            animation-duration: 180s;
+            animation-direction: reverse;
+        }
+        
+        .galaxy-arm-3 {
+            width: 1600px;
+            height: 1600px;
+            opacity: 0.25;
+            animation-duration: 220s;
+        }
+        
+        /* 星云效果 */
+        .nebula {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            z-index: 3;
+        }
+        
+        .nebula-1 {
+            top: 10%;
+            left: 20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #ff00cc, #333399);
+            animation: float 35s infinite ease-in-out;
+        }
+        
+        .nebula-2 {
+            bottom: 15%;
+            right: 15%;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, #00ccff, #003366);
+            animation: float 40s infinite ease-in-out reverse;
+        }
+        
+        /* 星星背景 */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 4;
+        }
+        
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+            will-change: opacity;
+        }
+        
+        /* 行星 */
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            box-shadow: 0 0 40px rgba(255,255,255,0.3);
+            z-index: 5;
+            transform-style: preserve-3d;
+        }
+        
+        .planet-1 {
+            top: 15%;
+            right: 5%;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle at 30% 30%, #ff9966, #ff5e62);
+            animation: orbit 60s infinite linear;
+        }
+        
+        .planet-2 {
+            bottom: 20%;
+            left: 5%;
+            width: 90px;
+            height: 90px;
+            background: radial-gradient(circle at 30% 30%, #00ccff, #0066cc);
+            animation: orbit 70s infinite linear reverse;
+        }
+        
+        /* 信封容器 */
+        .envelope-scene {
+            position: relative;
+            width: 100%;
             max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+            height: 550px;
+            z-index: 100;
+            transform-style: preserve-3d;
+            filter: drop-shadow(0 0 30px rgba(0, 195, 255, 0.7));
+            transform: 
+                translateX(0) 
+                translateY(0)
+                translateZ(0) 
+                rotateX(0) 
+                rotateZ(0) 
+                scale(1);
+            opacity: 1;
+            will-change: transform;
+        }
+        
+        /* 真实信封结构 */
+        .real-envelope {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            transform-origin: center bottom;
+            cursor: pointer;
+            will-change: transform;
+        }
+        
+        /* 信封背面 */
+        .envelope-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 15, 30, 0.85);
+            border-radius: 8px;
+            box-shadow: 
+                0 15px 40px rgba(0, 0, 0, 0.7),
+                0 0 0 2px rgba(0, 195, 255, 0.5),
+                0 0 30px rgba(0, 195, 255, 0.4) inset;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            transform: translateZ(0);
+            border: 1px solid rgba(0, 195, 255, 0.4);
+            background-image: 
+                linear-gradient(rgba(0, 195, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 195, 255, 0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            overflow: hidden;
+        }
+        
+        .envelope-back::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                rgba(0, 195, 255, 0.05) 0%, 
+                rgba(255, 77, 166, 0.05) 50%, 
+                rgba(0, 195, 255, 0.05) 100%);
+            animation: hologramScan 12s infinite linear;
+        }
+        
+        /* 信封翻盖 */
+        .envelope-flap {
+            position: absolute;
+            width: 100%;
+            height: 50%;
+            background: rgba(15, 25, 45, 0.9);
+            border-radius: 8px 8px 0 0;
+            transform-origin: bottom center;
+            transform: rotateX(0deg) translateZ(5px);
+            transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 30;
+            border: 1px solid rgba(0, 195, 255, 0.4);
+            border-bottom: none;
+            box-shadow: 
+                0 -8px 30px rgba(0, 0, 0, 0.5),
+                0 0 0 2px rgba(0, 195, 255, 0.5),
+                0 0 30px rgba(0, 195, 255, 0.4) inset;
+            background-image: 
+                linear-gradient(rgba(0, 195, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 195, 255, 0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            will-change: transform;
+        }
+        
+        /* 信封内容 */
+        .envelope-content {
+            position: absolute;
+            width: 95%;
+            height: 95%;
+            background: rgba(5, 10, 20, 0.9);
+            border-radius: 6px;
+            box-shadow: 
+                0 8px 30px rgba(0, 0, 0, 0.7),
+                0 0 0 2px rgba(0, 195, 255, 0.5);
+            display: flex;
+            flex-direction: column;
+            padding: 40px 30px;
+            transform: translateZ(-5px);
+            transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.5s ease 0.5s;
+            z-index: 10;
+            overflow-y: auto;
+            top: 2.5%;
+            left: 2.5%;
+            border: 1px solid rgba(0, 195, 255, 0.4);
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+        
+        /* 打开状态 */
+        .open .real-envelope {
+            transform: translateY(-120px) rotateX(12deg);
+        }
+        
+        .open .envelope-flap {
+            transform: rotateX(180deg) translateZ(5px);
+        }
+        
+        .open .envelope-content {
+            transform: translateZ(10px);
+            opacity: 1;
+        }
+        
+        /* 信封封面内容 */
+        .envelope-front {
+            text-align: center;
+            padding: 40px;
+            position: relative;
+            z-index: 5;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .envelope-front h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            color: #00f3ff;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(0, 243, 255, 0.8);
+            animation: neonPulse 2s infinite alternate;
+            letter-spacing: 4px;
+            position: relative;
+            z-index: 20;
+            will-change: text-shadow;
+        }
+        
+        .envelope-front h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #ff4da6;
+            margin-bottom: 80px;
+            letter-spacing: 3px;
+            position: relative;
+            top: -35px;
+            z-index: 20;
+            text-shadow: 0 0 15px rgba(255, 77, 166, 0.8);
+            animation: neonPulsePink 2s infinite alternate;
+            will-change: text-shadow;
+        }
+        
+        .quantum-stamp {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #00f3ff, #0066ff);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            font-weight: bold;
+            transform: rotate(5deg);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.7);
+            border: 2px solid #00f3ff;
+            text-align: center;
+            line-height: 1.2;
+            z-index: 30;
+            animation: floatStamp 4s infinite ease-in-out;
+            will-change: transform;
+        }
+        
+        .quantum-stamp::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle, transparent 50%, rgba(0, 243, 255, 0.3) 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: hologramRing 4s infinite linear;
+        }
+        
+        .hologram-seal {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle at 30% 30%, rgba(0, 243, 255, 0.8), rgba(0, 102, 255, 0.5));
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 3rem;
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.8);
+            z-index: 25;
+            animation: hologramPulse 3s infinite alternate;
+            will-change: transform, opacity, box-shadow;
+        }
+        
+        .hologram-seal::before {
+            content: '';
+            position: absolute;
+            width: 130%;
+            height: 130%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 243, 255, 0.4), transparent 70%);
+            top: -15%;
+            left: -15%;
+            z-index: -1;
+            animation: hologramRing 5s infinite linear reverse;
+        }
+        
+        .address {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: #00f3ff;
+            font-size: 1.8rem;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 8px rgba(0, 243, 255, 0.8);
+            width: 100%;
+            z-index: 20;
+        }
+        
+        .open-instruction {
+            position: absolute;
+            bottom: 25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: #ff4da6;
+            font-size: 1.6rem;
+            animation: bounce 2s infinite;
+            font-family: 'Orbitron', sans-serif;
+            z-index: 20;
+            text-shadow: 0 0 8px rgba(255, 77, 166, 0.8);
+            opacity: 1;
+        }
+        
+        /* 内容区域 */
+        .birthday-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            color: #00f3ff;
+            text-align: center;
+            margin-bottom: 25px;
+            text-shadow: 0 0 15px rgba(0, 243, 255, 0.8);
+            animation: neonPulse 2s infinite alternate;
+            letter-spacing: 4px;
+        }
+        
+        .birthday-subtitle {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #ff4da6;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px rgba(255, 77, 166, 0.8);
+            animation: neonPulsePink 2s infinite alternate;
+        }
+        
+        .birthday-subtitle::before,
+        .birthday-subtitle::after {
+            content: '✦';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00f3ff;
+            font-size: 2.5rem;
+            text-shadow: 0 0 15px rgba(0, 243, 255, 0.8);
+            animation: neonPulse 2s infinite alternate;
+        }
+        
+        .birthday-subtitle::before {
+            left: 15%;
+        }
+        
+        .birthday-subtitle::after {
+            right: 15%;
+        }
+        
+        .message-container {
+            background: rgba(10, 20, 40, 0.8);
+            border-radius: 8px;
+            padding: 40px;
+            margin: 20px 0;
+            box-shadow: 
+                0 0 30px rgba(0, 195, 255, 0.4),
+                0 0 0 2px rgba(0, 195, 255, 0.4);
+            position: relative;
+            z-index: 15;
+            border: 1px solid rgba(0, 195, 255, 0.4);
+        }
+        
+        .message-box h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff4da6;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 3.2rem;
+            position: relative;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px rgba(255, 77, 166, 0.8);
+            animation: neonPulsePink 2s infinite alternate;
+        }
+        
+        .message-box h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(to right, #ff4da6, #ff0066);
+            border-radius: 2px;
+            box-shadow: 0 0 15px rgba(255, 77, 166, 0.8);
+        }
+        
+        /* 信的内容 */
+        .message-content {
+            font-family: 'ZCOOL QingKe HuangYou', sans-serif;
+            font-size: 1.8rem;
+            line-height: 1.9;
+            color: #e0f7ff;
+            text-align: justify;
+            padding: 0 20px;
+            letter-spacing: 1.2px;
             position: relative;
             z-index: 10;
         }
         
-        header {
-            text-align: center;
-            padding: 40px 20px;
+        .message-content p {
+            margin-bottom: 25px;
             position: relative;
-            overflow: hidden;
-        }
-        
-        .birthday-title {
-            font-size: 3.5rem;
-            color: #d32f2f;
-            text-shadow: 3px 3px 0 rgba(0,0,0,0.1);
-            margin-bottom: 10px;
-            animation: pulse 2s infinite;
-        }
-        
-        .birthday-subtitle {
-            font-size: 1.8rem;
-            color: #5d4037;
-            margin-bottom: 30px;
-        }
-        
-        .cake-container {
-            position: relative;
-            margin: 40px auto;
-            width: 280px;
-            height: 300px;
-        }
-        
-        .real-cake {
-            width: 100%;
-            max-width: 280px;
-            height: auto;
-            border-radius: 20px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        .message-box {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 20px;
-            padding: 30px;
-            margin: 30px 0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .message-box h2 {
-            color: #d32f2f;
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 2.2rem;
-        }
-        
-        .message-content {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #5d4037;
         }
         
         .highlight {
-            color: #d32f2f;
+            color: #00f3ff;
             font-weight: bold;
+            position: relative;
+            text-shadow: 0 0 8px rgba(0, 243, 255, 0.7);
+            font-family: 'Orbitron', sans-serif;
         }
         
-        .birthday-info {
-            display: flex;
-            justify-content: center;
-            margin: 25px 0;
-            flex-wrap: wrap;
-        }
-        
-        .info-card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 10px;
-            width: 180px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .info-card i {
+        .signature {
+            text-align: right;
+            margin-top: 50px;
+            font-family: 'Orbitron', sans-serif;
             font-size: 2.5rem;
-            color: #d32f2f;
-            margin-bottom: 10px;
+            color: #ff4da6;
+            position: relative;
+            text-shadow: 0 0 15px rgba(255, 77, 166, 0.8);
         }
         
-        .balloon {
-            position: absolute;
-            width: 50px;
-            height: 60px;
-            border-radius: 50%;
-            z-index: 1;
-        }
-        
-        .balloon:before {
+        .signature::before {
             content: '';
             position: absolute;
-            width: 2px;
-            height: 80px;
-            background: rgba(0,0,0,0.2);
-            bottom: -80px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: -20px;
+            right: 0;
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(to left, #ff4da6, #ff0066);
+            box-shadow: 0 0 15px rgba(255, 77, 166, 0.8);
         }
         
-        .balloon:nth-child(1) {
-            background: radial-gradient(circle at 30% 30%, #ff4081, #d81b60);
-            top: 10%;
-            left: 5%;
-            animation: float 15s infinite linear;
-        }
-        
-        .balloon:nth-child(2) {
-            background: radial-gradient(circle at 30% 30%, #7e57c2, #4527a0);
-            top: 20%;
-            right: 7%;
-            animation: float 18s infinite linear;
-            animation-delay: 2s;
-        }
-        
-        .balloon:nth-child(3) {
-            background: radial-gradient(circle at 30% 30%, #29b6f6, #0288d1);
-            top: 40%;
-            left: 8%;
-            animation: float 12s infinite linear;
-            animation-delay: 4s;
-        }
-        
-        .balloon:nth-child(4) {
-            background: radial-gradient(circle at 30% 30%, #66bb6a, #388e3c);
-            bottom: 20%;
-            right: 10%;
-            animation: float 16s infinite linear;
-            animation-delay: 1s;
-        }
-        
-        .confetti {
+        /* 粒子效果 */
+        .floating-particles {
             position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #f44336;
-            opacity: 0.8;
-            border-radius: 50%;
-            z-index: 0;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
         }
         
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00f3ff;
+            animation: floatParticle 10s infinite linear;
+            filter: drop-shadow(0 0 5px #00f3ff);
+            will-change: transform, opacity;
+        }
+        
+        .particle:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .particle:nth-child(2) {
+            top: 40%;
+            right: 15%;
+            animation-delay: 2s;
+            animation-duration: 12s;
+            background: #ff4da6;
+            filter: drop-shadow(0 0 5px #ff4da6);
+        }
+        
+        .particle:nth-child(3) {
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 4s;
+            animation-duration: 14s;
+        }
+        
+        /* 音乐控制 */
         .music-control {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background: #d32f2f;
+            bottom: 30px;
+            right: 30px;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #00f3ff, #0066ff);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 24px;
+            color: #fff;
+            font-size: 32px;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            z-index: 100;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.8);
+            z-index: 200;
+            transition: transform 0.3s ease;
+            border: 2px solid #00f3ff;
+            animation: pulse 2s infinite;
+            will-change: transform;
+        }
+        
+        .music-control:hover {
+            transform: scale(1.1);
         }
         
         .footer-note {
             text-align: center;
-            margin-top: 30px;
-            color: #5d4037;
-            font-size: 0.9rem;
+            margin-top: 40px;
+            color: #00f3ff;
+            font-size: 1.4rem;
+            padding: 20px;
+            background: rgba(0, 195, 255, 0.15);
+            border-radius: 15px;
+            font-family: 'ZCOOL QingKe HuangYou', sans-serif;
+            border: 1px solid rgba(0, 195, 255, 0.4);
         }
         
+        /* 发射点 */
+        .launch-point {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: #00f3ff;
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.8);
+            animation: launchPulse 3s infinite;
+            z-index: 50;
+            transform: translate(-50%, -50%);
+            will-change: box-shadow;
+        }
+        
+        .launch-point::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(0, 243, 255, 0.3);
+            transform: translate(-50%, -50%);
+            animation: launchPulseAfter 3s infinite;
+        }
+        
+        /* 歌词显示区 */
+        .lyrics-container {
+            text-align: center;
+            margin: 20px 0 30px;
+            min-height: 60px;
+            position: relative;
+            z-index: 20;
+        }
+        
+        .lyrics {
+            font-size: 2.4rem;
+            font-weight: bold;
+            color: #ff4da6;
+            text-shadow: 0 0 15px rgba(255, 77, 166, 0.8);
+            font-family: 'Orbitron', sans-serif;
+            animation: neonPulsePink 2s infinite alternate;
+            padding: 15px 25px;
+            background: rgba(0, 195, 255, 0.15);
+            border-radius: 15px;
+            display: inline-block;
+            border: 1px solid rgba(0, 195, 255, 0.4);
+        }
+        
+        /* 音符动画 */
+        .note {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0;
+            z-index: 500;
+            pointer-events: none;
+            animation: float 3s ease-out;
+            color: #00f3ff;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.8);
+        }
+        
+        /* 动画效果 */
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% { transform: scale(1); box-shadow: 0 0 30px rgba(0, 243, 255, 0.8); }
+            50% { transform: scale(1.05); box-shadow: 0 0 40px rgba(0, 243, 255, 1); }
+            100% { transform: scale(1); box-shadow: 0 0 30px rgba(0, 243, 255, 0.8); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
         
         @keyframes float {
             0% { transform: translateY(0) rotate(0); }
-            50% { transform: translateY(-20px) rotate(5deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
             100% { transform: translateY(0) rotate(0); }
         }
         
-        @media (max-width: 600px) {
-            .birthday-title {
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+        
+        @keyframes neonPulse {
+            0% { text-shadow: 0 0 15px rgba(0, 243, 255, 0.8); }
+            100% { text-shadow: 0 0 20px rgba(0, 243, 255, 1); }
+        }
+        
+        @keyframes neonPulsePink {
+            0% { text-shadow: 0 0 15px rgba(255, 77, 166, 0.8); }
+            100% { text-shadow: 0 0 20px rgba(255, 77, 166, 1); }
+        }
+        
+        @keyframes hologramPulse {
+            0% { opacity: 0.7; transform: translateX(-50%) scale(1); box-shadow: 0 0 30px rgba(0, 243, 255, 0.8); }
+            100% { opacity: 0.9; transform: translateX(-50%) scale(1.05); box-shadow: 0 0 40px rgba(0, 243, 255, 1); }
+        }
+        
+        @keyframes hologramRing {
+            0% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.2); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 0.4; }
+        }
+        
+        @keyframes floatStamp {
+            0%, 100% { transform: rotate(5deg) translateY(0); }
+            50% { transform: rotate(6deg) translateY(-10px); }
+        }
+        
+        @keyframes floatParticle {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(180deg); opacity: 0; }
+        }
+        
+        @keyframes hologramScan {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 0% 100%; }
+        }
+        
+        @keyframes orbit {
+            0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+        }
+        
+        /* 银河系动画 */
+        @keyframes galaxySpin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @keyframes galaxyPulse {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+            50% { transform: translate(-50%, -50%) scale(1.02); opacity: 0.8; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+        }
+        
+        /* 发射点动画 */
+        @keyframes launchPulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 243, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0); }
+        }
+        
+        @keyframes launchPulseAfter {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+            100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+        }
+        
+        /* 音符浮动动画 */
+        @keyframes floatNote {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100px); opacity: 0; }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .envelope-scene {
+                height: 500px;
+                max-width: 90%;
+            }
+            
+            .envelope-front h1 {
+                font-size: 3.5rem;
+            }
+            
+            .envelope-front h2 {
                 font-size: 2.5rem;
+                margin-bottom: 70px;
+                top: -30px;
             }
             
-            .birthday-subtitle {
-                font-size: 1.4rem;
-            }
-            
-            .cake-container {
-                width: 200px;
-                height: 220px;
-            }
-            
-            .message-box {
-                padding: 20px;
-            }
-            
-            .message-box h2 {
+            .quantum-stamp {
+                width: 80px;
+                height: 80px;
                 font-size: 1.8rem;
             }
             
-            .message-content {
-                font-size: 1rem;
+            .birthday-title {
+                font-size: 3.5rem;
             }
             
-            .info-card {
-                width: 140px;
-                padding: 15px;
+            .birthday-subtitle {
+                font-size: 2.5rem;
+            }
+            
+            .message-container {
+                padding: 30px 20px;
+            }
+            
+            .message-content {
+                font-size: 1.6rem;
+            }
+            
+            .lyrics {
+                font-size: 2rem;
+                padding: 10px 20px;
+            }
+            
+            .galaxy-core {
+                width: 300px;
+                height: 300px;
+                filter: blur(40px);
+            }
+            
+            .galaxy-arm {
+                width: 1500px;
+                height: 1500px;
+            }
+            
+            .galaxy-arm-1 {
+                width: 1500px;
+                height: 1500px;
+            }
+            
+            .galaxy-arm-2 {
+                width: 1300px;
+                height: 1300px;
+            }
+            
+            .galaxy-arm-3 {
+                width: 1100px;
+                height: 1100px;
+            }
+            
+            .nebula {
+                filter: blur(60px);
+            }
+            
+            .nebula-1, .nebula-2 {
+                width: 400px;
+                height: 400px;
+            }
+            
+            .planet-1, .planet-2 {
+                animation-duration: 80s;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .envelope-front h1 {
+                font-size: 2.8rem;
+            }
+            
+            .envelope-front h2 {
+                font-size: 2rem;
+                margin-bottom: 60px;
+                top: -25px;
+            }
+            
+            .quantum-stamp {
+                width: 70px;
+                height: 70px;
+                font-size: 1.5rem;
+                top: 30px;
+                right: 30px;
+            }
+            
+            .hologram-seal {
+                width: 80px;
+                height: 80px;
+                font-size: 2.5rem;
+                bottom: 100px;
+            }
+            
+            .address {
+                font-size: 1.4rem;
+                bottom: 50px;
+            }
+            
+            .open-instruction {
+                font-size: 1.3rem;
+            }
+            
+            .birthday-title {
+                font-size: 2.8rem;
+            }
+            
+            .birthday-subtitle {
+                font-size: 2rem;
+            }
+            
+            .message-box h2 {
+                font-size: 2.5rem;
+            }
+            
+            .message-content {
+                font-size: 1.4rem;
+                padding: 0 10px;
+            }
+            
+            .lyrics {
+                font-size: 1.8rem;
+            }
+            
+            .music-control {
+                width: 70px;
+                height: 70px;
+                font-size: 28px;
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .galaxy-core {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .galaxy-arm {
+                opacity: 0.3;
+                width: 1200px;
+                height: 1200px;
+            }
+            
+            .galaxy-arm-1 {
+                width: 1200px;
+                height: 1200px;
+            }
+            
+            .galaxy-arm-2 {
+                width: 1000px;
+                height: 1000px;
+            }
+            
+            .galaxy-arm-3 {
+                width: 800px;
+                height: 800px;
+            }
+            
+            .nebula {
+                opacity: 0.3;
+            }
+            
+            .particle {
+                width: 6px;
+                height: 6px;
+            }
+        }
+        
+        /* 针对低性能设备的优化 */
+        @media (max-width: 480px) {
+            .galaxy-core {
+                width: 200px;
+                height: 200px;
+                filter: blur(30px);
+            }
+            
+            .galaxy-arm {
+                display: none;
+            }
+            
+            .galaxy-arm-1 {
+                display: block;
+            }
+            
+            .nebula {
+                display: none;
+            }
+            
+            .particle {
+                display: none;
+            }
+            
+            .planet {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 气球装饰 -->
-    <div class="balloon"></div>
-    <div class="balloon"></div>
-    <div class="balloon"></div>
-    <div class="balloon"></div>
+    <!-- 银河背景 -->
+    <div class="galaxy-container">
+        <div class="galaxy-core"></div>
+        <div class="galaxy-arm galaxy-arm-1"></div>
+        <div class="galaxy-arm galaxy-arm-2"></div>
+        <div class="galaxy-arm galaxy-arm-3"></div>
+        <div class="nebula nebula-1"></div>
+        <div class="nebula nebula-2"></div>
+        <div class="stars" id="stars"></div>
+        <div class="planet planet-1"></div>
+        <div class="planet planet-2"></div>
+        <div class="launch-point"></div>
+    </div>
     
     <!-- 音乐控制按钮 -->
     <div class="music-control" id="musicControl">
         <i class="fas fa-play"></i>
     </div>
     
-    <div class="container">
-        <header>
-            <h1 class="birthday-title">生日快乐!</h1>
-            <h2 class="birthday-subtitle">亲爱的刘颖</h2>
+    <!-- 信封场景 -->
+    <div class="envelope-scene">
+        <div class="real-envelope" id="envelope">
+            <!-- 信封翻盖 -->
+            <div class="envelope-flap"></div>
             
-            <div class="cake-container">
-                <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1089&q=80" 
-                     alt="生日蛋糕" class="real-cake">
-            </div>
-        </header>
-        
-        <div class="birthday-info">
-            <div class="info-card">
-                <i class="fas fa-user"></i>
-                <h3>姓名</h3>
-                <p>刘颖</p>
+            <!-- 信封背面 -->
+            <div class="envelope-back">
+                <div class="floating-particles">
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                </div>
+                <div class="envelope-front">
+                    <div class="quantum-stamp">时空<br>邮戳</div>
+                    <h1>生日快乐!</h1>
+                    <h2>致：刘颖</h2>
+                    <div class="hologram-seal">
+                        <i class="fas fa-infinity"></i>
+                    </div>
+                    <div class="address">时空坐标：2023.8.11</div>
+                    <div class="open-instruction" id="openInstruction">
+                        <i class="fas fa-hand-point-up"></i> 点击接收时空祝福
+                    </div>
+                </div>
             </div>
             
-            <div class="info-card">
-                <i class="fas fa-birthday-cake"></i>
-                <h3>生日</h3>
-                <p>2003年08月11日</p>
+            <!-- 信封内容 -->
+            <div class="envelope-content" id="envelopeContent">
+                <h1 class="birthday-title">生日快乐!</h1>
+                <h2 class="birthday-subtitle">刘颖</h2>
+                
+                <div class="lyrics-container">
+                    <div class="lyrics" id="lyrics">点击播放按钮开始</div>
+                </div>
+                
+                <div class="message-container">
+                    <div class="message-box">
+                        <h2>时空祝福</h2>
+                        <div class="message-content">
+                            <p>您好<span class="highlight">刘颖</span>：</p>
+                            <p>在银河系的旋臂间，这封祝福信从遥远的星辰出发，穿越时空抵达你的此刻。</p>
+                            <p>您好刘颖，22 岁进度条正式拉满！</p>
+                            <p>Happy Level-Up Day!</p>
+                            <p>今天先许一个愿吧。</p>
+                            <p>愿你的生命轨迹如超新星般璀璨夺目，愿你的梦想在多元宇宙中自由穿梭！新的一岁，愿快乐如引力般环绕你，友谊如暗能量般永恒，机遇如虫洞般无处不在。</p>
+                            <p>保持你那独特的量子态，在时间的长河中持续闪耀！愿你的今天充满喜悦，明天更加辉煌，未来如同无限膨胀的宇宙般充满可能！</p>
+                            <p>这封来自银河系中心的信件，承载着超越维度的祝福：</p>
+
+                            <div class="signature">时空旅者✦您的朋友</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-note">
+                    <p>✦ 此量子信息由银河祝福委员会传送，打开信封将启动祝福序列 ✦</p>
+                </div>
             </div>
-            
-            <div class="info-card">
-                <i class="fas fa-gift"></i>
-                <h3>祝福</h3>
-                <p>幸福快乐</p>
-            </div>
-        </div>
-        
-        <div class="message-box">
-            <h2>生日祝福</h2>
-            <div class="message-content">
-                <p>亲爱的<span class="highlight">刘颖</span>，在这特别的日子里，愿你被幸福和快乐环绕！</p>
-                <p>从<span class="highlight">2003年8月11日</span>到今天的每一刻，你都是如此特别的存在。愿你的生活充满阳光，愿你的梦想如星辰般闪耀！</p>
-                <p>愿新的一岁带给你无尽的欢笑、真挚的友情和无限的可能。愿你保持那份独特的魅力，继续闪耀光芒！</p>
-                <p>祝你生日快乐，愿你拥有一个美好的今天，一个灿烂的明天，和一个充满惊喜的未来！</p>
-            </div>
-        </div>
-        
-        <div class="footer-note">
-            <p>❤ 此页面专为你制作，打开即自动播放生日歌 ❤</p>
         </div>
     </div>
 
     <script>
-        // 创建音频上下文
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        const audioCtx = new AudioContext();
+        // 创建星空背景
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 300; // 减少星星数量
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // 随机大小
+                const size = Math.random() * 3 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // 随机位置
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // 随机闪烁速度
+                star.style.setProperty('--duration', `${Math.random() * 4 + 2}s`);
+                
+                starsContainer.appendChild(star);
+            }
+        }
         
-        // 生日歌频率和持续时间
-        const birthdaySong = [
-            { note: 'G4', duration: 0.5 }, { note: 'G4', duration: 0.5 }, 
-            { note: 'A4', duration: 1 }, { note: 'G4', duration: 1 }, 
-            { note: 'C5', duration: 1 }, { note: 'B4', duration: 2 },
-            { note: 'G4', duration: 0.5 }, { note: 'G4', duration: 0.5 }, 
-            { note: 'A4', duration: 1 }, { note: 'G4', duration: 1 }, 
-            { note: 'D5', duration: 1 }, { note: 'C5', duration: 2 },
-            { note: 'G4', duration: 0.5 }, { note: 'G4', duration: 0.5 }, 
-            { note: 'G5', duration: 1 }, { note: 'E5', duration: 1 }, 
-            { note: 'C5', duration: 1 }, { note: 'B4', duration: 1 }, 
-            { note: 'A4', duration: 2 },
-            { note: 'F5', duration: 0.5 }, { note: 'F5', duration: 0.5 }, 
-            { note: 'E5', duration: 1 }, { note: 'C5', duration: 1 }, 
-            { note: 'D5', duration: 1 }, { note: 'C5', duration: 2 }
+        // 创建音频上下文
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let isPlaying = false;
+        let currentNote = 0;
+        let lyricsElement = document.getElementById('lyrics');
+        let animationInterval;
+        
+        // 生日快乐歌的音符序列和歌词
+        const song = [
+            {note: 392, duration: 0.5, lyric: "祝你生日快乐"}, // G4
+            {note: 392, duration: 0.5},
+            {note: 440, duration: 1},
+            {note: 392, duration: 1},
+            {note: 523, duration: 1}, // C5
+            {note: 494, duration: 2}, // B4
+            {note: 392, duration: 0.5, lyric: "祝你生日快乐"}, // G4
+            {note: 392, duration: 0.5},
+            {note: 440, duration: 1},
+            {note: 392, duration: 1},
+            {note: 587, duration: 1}, // D5
+            {note: 523, duration: 2}, // C5
+            {note: 392, duration: 0.5, lyric: "祝你生日快乐"}, // G4
+            {note: 392, duration: 0.5},
+            {note: 784, duration: 1}, // G5
+            {note: 659, duration: 1}, // E5
+            {note: 523, duration: 1}, // C5
+            {note: 494, duration: 1}, // B4
+            {note: 440, duration: 2}, // A4
+            {note: 698, duration: 0.5, lyric: "祝你永远快乐"}, // F5
+            {note: 698, duration: 0.5},
+            {note: 659, duration: 1}, // E5
+            {note: 523, duration: 1}, // C5
+            {note: 587, duration: 1}, // D5
+            {note: 523, duration: 2}  // C5
         ];
         
-        // 音符频率映射
-        const noteFrequencies = {
-            'C4': 261.63, 'D4': 293.66, 'E4': 329.63, 'F4': 349.23, 
-            'G4': 392.00, 'A4': 440.00, 'B4': 493.88, 'C5': 523.25, 
-            'D5': 587.33, 'E5': 659.25, 'F5': 698.46, 'G5': 783.99
-        };
-        
-        // 播放单个音符
-        function playTone(frequency, duration) {
+        // 播放音符
+        function playNote(frequency, duration) {
             const oscillator = audioCtx.createOscillator();
             const gainNode = audioCtx.createGain();
             
@@ -347,98 +1202,145 @@
             oscillator.type = 'sine';
             oscillator.frequency.value = frequency;
             
-            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+            // 淡入淡出效果使声音更自然
+            gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.5, audioCtx.currentTime + 0.01);
+            gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + duration - 0.01);
             
             oscillator.start();
             oscillator.stop(audioCtx.currentTime + duration);
+            
+            // 创建音符动画
+            createNoteAnimation();
         }
         
-        // 播放生日歌
-        function playBirthdaySong() {
-            let time = audioCtx.currentTime;
+        // 创建音符动画
+        function createNoteAnimation() {
+            const note = document.createElement('div');
+            note.className = 'note';
+            note.innerHTML = '♪';
+            note.style.left = Math.random() * 80 + 10 + '%';
+            note.style.color = `hsl(${Math.random() * 360}, 100%, 65%)`;
+            document.body.appendChild(note);
             
-            birthdaySong.forEach((noteObj, index) => {
-                const frequency = noteFrequencies[noteObj.note];
-                const duration = noteObj.duration;
-                
-                setTimeout(() => {
-                    playTone(frequency, duration);
-                }, time * 1000);
-                
-                time += duration + 0.05; // 添加小间隙
-            });
+            // 设置动画
+            note.style.animation = `floatNote ${Math.random() * 3 + 2}s linear`;
             
-            // 循环播放
-            setTimeout(playBirthdaySong, time * 1000 + 1000);
+            setTimeout(() => {
+                document.body.removeChild(note);
+            }, 3000);
         }
         
-        // 创建五彩纸屑效果
-        function createConfetti() {
-            const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
+        // 播放歌曲
+        function playSong() {
+            if (isPlaying) return;
             
-            for (let i = 0; i < 50; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.left = `${Math.random() * 100}vw`;
-                confetti.style.top = `${Math.random() * -50}vh`;
-                confetti.style.width = `${Math.random() * 10 + 5}px`;
-                confetti.style.height = confetti.style.width;
-                
-                // 设置动画
-                const animationDuration = Math.random() * 5 + 5;
-                confetti.style.animation = `fall ${animationDuration}s linear infinite`;
-                
-                // 创建关键帧
-                const keyframes = `@keyframes fall-${i} {
-                    0% { transform: translateY(0) rotate(0); opacity: 1; }
-                    100% { transform: translateY(100vh) rotate(${Math.random() * 360}deg); opacity: 0; }
-                }`;
-                
-                const style = document.createElement('style');
-                style.textContent = keyframes;
-                document.head.appendChild(style);
-                
-                confetti.style.animationName = `fall-${i}`;
-                document.body.appendChild(confetti);
+            isPlaying = true;
+            currentNote = 0;
+            audioCtx.resume(); // 解决浏览器自动播放限制
+            
+            // 开始播放
+            playNextNote();
+            
+            // 开始音符动画
+            animationInterval = setInterval(createNoteAnimation, 300);
+            
+            // 更新音乐控制按钮
+            document.getElementById('musicControl').innerHTML = '<i class="fas fa-pause"></i>';
+        }
+        
+        // 播放下一音符
+        function playNextNote() {
+            if (!isPlaying || currentNote >= song.length) {
+                stopSong();
+                return;
             }
+            
+            const noteData = song[currentNote];
+            
+            // 更新歌词
+            if (noteData.lyric) {
+                lyricsElement.textContent = noteData.lyric;
+                lyricsElement.style.animation = 'none';
+                setTimeout(() => {
+                    lyricsElement.style.animation = 'neonPulsePink 0.5s';
+                }, 10);
+            }
+            
+            // 播放音符
+            playNote(noteData.note, noteData.duration);
+            
+            // 安排下一个音符
+            currentNote++;
+            setTimeout(playNextNote, noteData.duration * 1000);
         }
         
-        // 音乐控制
-        const musicControl = document.getElementById('musicControl');
-        let isPlaying = false;
+        // 停止播放
+        function stopSong() {
+            isPlaying = false;
+            clearInterval(animationInterval);
+            lyricsElement.textContent = "播放结束 🎉";
+            document.getElementById('musicControl').innerHTML = '<i class="fas fa-play"></i>';
+        }
         
+        // 音乐控制按钮点击事件
+        const musicControl = document.getElementById('musicControl');
         musicControl.addEventListener('click', () => {
             if (isPlaying) {
-                // 暂停音乐
-                audioCtx.suspend();
-                musicControl.innerHTML = '<i class="fas fa-play"></i>';
+                stopSong();
             } else {
-                // 恢复播放
-                audioCtx.resume();
-                musicControl.innerHTML = '<i class="fas fa-pause"></i>';
+                playSong();
             }
-            isPlaying = !isPlaying;
+        });
+        
+        // 信封点击事件
+        const envelope = document.getElementById('envelope');
+        envelope.addEventListener('click', () => {
+            const envelopeScene = document.querySelector('.envelope-scene');
+            envelopeScene.classList.add('open');
+            
+            // 尝试播放生日歌（如果尚未播放）
+            if (!isPlaying) {
+                playSong();
+            }
+            
+            // 移除点击提示
+            document.getElementById('openInstruction').style.opacity = '0';
         });
         
         // 页面加载完成后执行
         window.addEventListener('load', () => {
-            // 创建纸屑效果
-            createConfetti();
+            // 创建星空
+            createStars();
             
-            // 用户交互后开始播放音乐（微信浏览器限制）
-            document.body.addEventListener('click', () => {
-                if (!isPlaying) {
-                    // 开始播放生日歌
-                    playBirthdaySong();
-                    musicControl.innerHTML = '<i class="fas fa-pause"></i>';
-                    isPlaying = true;
-                    
-                    // 移除事件监听器，避免重复触发
-                    document.body.removeEventListener('click', arguments.callee);
+            // 检测移动设备，减少动画
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                document.body.classList.add('mobile-device');
+                
+                // 为低性能设备进一步优化
+                if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                    document.querySelector('.galaxy-container').classList.add('no-animation');
                 }
-            }, { once: true });
+            }
+            
+            // 添加全局点击事件以启用音频
+            document.body.addEventListener('click', function firstInteraction() {
+                if (!isPlaying) {
+                    playSong();
+                }
+                document.body.removeEventListener('click', firstInteraction);
+            });
+        });
+        
+        // 处理触摸事件，防止多次点击
+        let lastClickTime = 0;
+        envelope.addEventListener('touchstart', (e) => {
+            const now = Date.now();
+            if (now - lastClickTime < 1000) {
+                e.preventDefault();
+                return;
+            }
+            lastClickTime = now;
         });
     </script>
 </body>
